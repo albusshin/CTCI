@@ -16,19 +16,21 @@ class MyQueue{
 
 public:
 	void enqueue(T val) {
+		if (!stk2.empty())
+			pour(stk2, stk1);
 		stk1.push(val);
 	}
 
 	T dequeue() {
-		pour(stk1, stk2);
+		if (!stk1.empty())
+			pour(stk1, stk2);
 		T ret = stk2.top();
 		stk2.pop();
-		pour(stk2, stk1);
 		return ret;
 	}
 
 	bool empty() {
-		return stk1.empty();
+		return stk1.empty() && stk2.empty();
 	}
 };
 
