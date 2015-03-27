@@ -8,6 +8,7 @@ struct Node{
 	Node(int d) :data(d), next(nullptr){};
 };
 
+/* O(n) space, O(n) time */
 Node *circleHead(Node *head) {
 	Node *p = head;
 	unordered_set<Node *> usp;
@@ -19,8 +20,26 @@ Node *circleHead(Node *head) {
 	return nullptr;
 }
 
+/* O(1) space, O(n) time */
+Node *circleHead2(Node *head) {
+	Node *slow = head;
+	Node *fast = head;
+	do{
+		slow = slow->next;
+		fast = fast->next->next;
+	} while (slow && fast && slow != fast);
+	if (!slow || !fast) return nullptr;
+	slow = head;
+	do {
+		slow = slow->next;
+		fast = fast->next;
+	} while (slow && fast && slow != fast);
+	return slow;
+}
+
 void test(Node *head) {
-	cout << circleHead(head)->data;
+	cout << circleHead(head)->data << endl;
+	cout << circleHead2(head)->data << endl;
 }
 
 int main() {
