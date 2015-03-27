@@ -18,6 +18,7 @@ int listLen(Node *head) {
 	return ret;
 }
 
+/* Iterate list twice */
 bool isPalindrome(Node *head) {
 	if (!head) return false;
 	int len = listLen(head);
@@ -35,6 +36,25 @@ bool isPalindrome(Node *head) {
 	return true;
 }
 
+/* Use runner */
+bool isPalindrome2(Node *head) {
+	if (!head) return false;
+	Node *slow = head, *fast = head;
+	stack<int> stk;
+	while (fast && fast->next) {
+		stk.push(slow->data);
+		slow = slow->next;
+		fast = fast->next->next;
+	}
+	if (fast) slow = slow->next;
+	while (slow) {
+		if (stk.top() != slow->data) return false;
+		slow = slow->next;
+		stk.pop();
+	}
+	return true;
+}
+
 void printList(Node *head) {
 	Node *p = head;
 	while (p) {
@@ -46,7 +66,7 @@ void printList(Node *head) {
 
 void test(Node *head) {
 	printList(head);
-	cout << (isPalindrome(head) ? "Yes" : "No") << endl;
+	cout << (isPalindrome(head) ? "Yes" : "No") << " " << (isPalindrome2(head) ? "Yes" : "No") << endl;
 }
 
 int main() {
